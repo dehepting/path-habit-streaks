@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     await redis.set(key, streak);
     return NextResponse.json({ ok: true, streak });
-  } catch (e: any) {
-    return NextResponse.json({ error: e?.message ?? 'error' }, { status: 500 });
+  } catch (e: unknown) {
+    return NextResponse.json({ error: (e as Error)?.message ?? 'error' }, { status: 500 });
   }
 }

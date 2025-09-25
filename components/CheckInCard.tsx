@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useMiniKit } from '@coinbase/onchainkit/minikit';
 import { useAccount } from 'wagmi';
-import Link from 'next/link';
 
 type Streak = { fid:number; current:number; best:number; count:number; lastISO:string|null };
 
@@ -19,7 +18,7 @@ const HABIT_OPTIONS = [
 ];
 
 export default function CheckInCard() {
-  const { context } = useMiniKit() as any;
+  const { context } = useMiniKit() as { context?: { user?: { fid?: number } } };
   const { address, isConnected } = useAccount();
   const [fid, setFid] = useState<number | undefined>();
   const [streak, setStreak] = useState<Streak | null>(null);
@@ -48,15 +47,14 @@ export default function CheckInCard() {
   }, [context?.user?.fid, address, isConnected]);
 
   const canUse = !!fid;
-  const userType = context?.user?.fid ? 'farcaster' : (isConnected ? 'wallet' : 'none');
 
-  const load = async (f: number) => {
+  const load = useCallback(async (f: number) => {
     const r = await fetch(`/api/streak?fid=${f}&habit=${encodeURIComponent(selectedHabit)}`);
     const j = await r.json();
     setStreak(j?.streak ?? null);
-  };
+  }, [selectedHabit]);
 
-  useEffect(() => { if (fid) load(fid); }, [fid, selectedHabit]);
+  useEffect(() => { if (fid) load(fid); }, [fid, load]);
 
   const onCheckIn = async () => {
     if (!fid) return;
@@ -74,13 +72,6 @@ export default function CheckInCard() {
     }
   };
 
-  const headline = useMemo(() => {
-    if (!streak) return 'Welcome back 👋';
-    if (streak.current === 1) return 'Day 1 — let’s go 🔥';
-    if (streak.current < 5) return `Streak ${streak.current} — momentum building`;
-    if (streak.current < 15) return `Streak ${streak.current} — consistency showing`;
-    return `Streak ${streak.current} — elite discipline`;
-  }, [streak]);
 
   return (
     <div className="max-w-sm mx-auto bg-white rounded-2xl shadow-lg border border-gray-200">
