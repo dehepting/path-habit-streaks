@@ -20,7 +20,7 @@ export const minikitConfig = {
   miniapp: {
     version: "1",
     name: "PATH Habit Streaks",
-    subtitle: "Build lasting habits through daily consistency",
+    subtitle: "Build lasting habits",
     description: "Track your daily habits and maintain streaks to build lasting change. Connect with your wallet or Farcaster to get started.",
     screenshotUrls: [`${ROOT_URL}/screenshot.png`],
     iconUrl: `${ROOT_URL}/icon.png`,
@@ -32,8 +32,8 @@ export const minikitConfig = {
     tags: ["habits", "productivity", "streaks", "self-improvement"],
     heroImageUrl: `${ROOT_URL}/hero.png`,
     tagline: "Build habits that stick",
-    ogTitle: "PATH Habit Streaks - Build lasting habits",
-    ogDescription: "Track your daily habits and maintain streaks to build lasting change. Connect with your wallet or Farcaster to get started.",
+    ogTitle: "PATH Habit Streaks",
+    ogDescription: "Track daily habits and maintain streaks. Connect wallet or Farcaster to get started.",
     ogImageUrl: `${ROOT_URL}/hero.png`,
   },
 } as const;
