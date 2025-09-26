@@ -1,3 +1,9 @@
+# PATH Habit Streaks
+
+A modern habit tracking app built as a Farcaster MiniApp.
+
+**Live App:** https://path-habit-streaks-5rbi.vercel.app
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-onchain`](https://www.npmjs.com/package/create-onchain).
 
 
